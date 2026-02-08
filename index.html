@@ -1,42 +1,240 @@
-﻿This is for Daniya
-This is for Daniya
-Just something from my heart to yours
-     </div>
-  <button class="surprise-btn" onclick="startSurprise()">Tap here Daniya 💗</button>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Daniya 💗</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffb6c1, #add8e6);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
 
-<div id="content" class="content hidden">
+.card {
+  background: white;
+  width: 90%;
+  max-width: 420px;
+  padding: 30px;
+  border-radius: 22px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  animation: fadeIn 1.2s ease;
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  color: #ff69b4;
+}
+
+button {
+  padding: 18px 32px;
+  font-size: 18px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(135deg, #ff69b4, #87cefa);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 18px;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.hidden {
+  display: none;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 16px;
+  margin-top: 15px;
+}
+
+.message {
+  margin-top: 18px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.note {
+  background: #fff0f5;
+  padding: 15px;
+  border-radius: 15px;
+  margin-top: 15px;
+  font-size: clamp(14px, 4vw, 16px);
+  color: #444;
+}
+
+.forever-sign {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #ff69b4;
+  font-size: 17px;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+  animation-delay: 10s;
+}
+
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 18px;
+  animation: floatUp 6s linear forwards;
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-110vh) scale(1.5);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <!-- INTRO -->
+  <div id="intro">
+    <h1>This is for Daniya 💗</h1>
+    <button id="startBtn">Tap here Daniya 💗</button>
   </div>
-  <button class="surprise-btn" onclick="startSurprise()">Tap here Daniya 💗</button>
+
+  <!-- CONTENT -->
+  <div id="content" class="hidden">
+
+    <div class="gallery">
+      <img id="slide" src="photo1.jpg">
+    </div>
+
+    <button id="noteBtn">🎁 Surprise</button>
+
+    <div id="loveNote" class="note hidden">
+      <span id="typedText"></span>
+      <div class="forever-sign">Forever yours ❤️</div>
+    </div>
+
+    <button id="shareBtn">💌 Share this</button>
+
+  </div>
+
 </div>
 
+<audio id="bg-music" src="song.mp3" loop></audio>
 
-<div id="content" class="content hidden">
-  <div class="message">Daniya, you make me the happiest. For me, you are
+<script>
+const photos = [
+  "photo1.jpg",
+  "photo2.jpg",
+  "photo3.jpg",
+  "photo4.jpg",
+  "photo5.jpg",
+  "photo6.jpg",
+  "photo7.jpg",
+  "photo8.jpg",
+  "photo9.jpg"
+];
+let index = 0;
 
+// Preload images
+photos.forEach(src => {
+  const img = new Image();
+  img.src = src;
+});
 
-      <div class="gallery">
-  <!-- Replace these image links with your own photos -->
-  <img src="photo1.jpg" />
-  <img src="photo2.jpg" />
-  <img src="photo7.jpg" />
-  <img src="photo8.jpg" />
-  <img src="photo9.jpg" />
-  <img src="photo3.jpg" />
-<img src="photo4.jpg" />       
-  <img src="photo3.jpg" />         
-</div>
+const loveMessage = "Daniya, I don’t even know where to start because words feel too small for what I feel for you. You came into my life quietly, but somehow you became the most important part of it. With you, even ordinary moments feel special, and even silence feels comfortable. You make me feel understood, valued, and loved in ways I never knew I needed. I love the way you are, your smile, your mood swings, your care, your imperfections, everything. You make me want to be better, not because you ask me to, but because loving you makes me want to grow. No matter what happens, I want you to know that my heart chooses you, again and again. I don’t just want moments with you, I want a lifetime. Through good days, bad days, distance, fights, laughter, and dreams, I want it all with you. You are not just someone I love, you are my home, my peace, my forever.";
 
+function startSurprise() {
+  // Hide intro and show content
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("content").classList.remove("hidden");
 
-      <div class="footer">
-  <button class="surprise-btn" onclick="toggleNote()">Tap here Daniya 💗</button>
-  <div id="love-note" class="love-note">Daniya, you are my everything. You make my days better just by being in them. I don’t want anything fancy from life, I just want you to stick around me. No matter what happens, my feelings for you will always stay the same. I love you, truly.</div>
-  <p>With all my love</p>
-  <h2>With you, today, tomorrow, and always</h2>
-  <div class="heart">❤</div>
-</div>
+  // Start slideshow and hearts
+  setInterval(changePhoto, 3000);
+  setInterval(createHeart, 500);
 
+  // Play music
+  const music = document.getElementById("bg-music");
+  music.play().catch(err => console.log("Music autoplay blocked", err));
+}
 
+function changePhoto() {
+  index = (index + 1) % photos.length;
+  document.getElementById("slide").src = photos[index];
+}
 
-Your browser does not support the audio element.
+function showNote() {
+  const note = document.getElementById("loveNote");
+  const textEl = document.getElementById("typedText");
+  note.classList.toggle("hidden");
+  textEl.innerHTML = "";
+  typeText(loveMessage, textEl);
+}
+
+function typeText(text, element) {
+  let i = 0;
+  const speed = 40;
+  function typing() {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    }
+  }
+  typing();
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = Math.random() > 0.5 ? "💗" : "💙";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 7000);
+}
+
+function shareLove() {
+  if (navigator.share) {
+    navigator.share({
+      title: "For Daniya 💗",
+      text: "I made something special for you 💗",
+      url: window.location.href
+    });
+  } else {
+    alert("Copy this link and share it 💗");
+  }
+}
+
+// Event listeners
+document.getElementById("startBtn").addEventListener("click", startSurprise);
+document.getElementById("noteBtn").addEventListener("click", showNote);
+document.getElementById("shareBtn").addEventListener("click", shareLove);
+</script>
+
+</body>
+</html>
