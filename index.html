@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>For Daniya 💗</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body {
   margin: 0;
@@ -25,14 +24,11 @@ body {
   border-radius: 22px;
   text-align: center;
   box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-  animation: fadeIn 1.2s ease;
   position: relative;
   z-index: 2;
 }
 
-h1 {
-  color: #ff69b4;
-}
+h1 { color: #ff69b4; }
 
 button {
   padding: 18px 32px;
@@ -46,13 +42,9 @@ button {
   margin-top: 18px;
 }
 
-button:active {
-  transform: scale(0.97);
-}
+button:active { transform: scale(0.97); }
 
-.hidden {
-  display: none;
-}
+.hidden { display: none; }
 
 .gallery img {
   width: 100%;
@@ -65,7 +57,7 @@ button:active {
   padding: 20px;
   border-radius: 15px;
   margin-top: 15px;
-  font-size: clamp(16px, 4vw, 18px);
+  font-size: clamp(16px,4vw,18px);
   font-weight: bold;
   color: #ff1493;
   animation: fadeBounce 1s ease forwards;
@@ -91,49 +83,20 @@ button:active {
   z-index: 1;
 }
 
-#musicPrompt {
-  color: #ff69b4;
-  margin-top: 15px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fadeBounce {
-  0% { opacity: 0; transform: scale(0.5); }
-  50% { opacity: 1; transform: scale(1.2); }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-110vh) scale(1.5);
-    opacity: 0;
-  }
-}
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+@keyframes fadeBounce { 0% {opacity:0; transform:scale(0.5);} 50% {opacity:1; transform:scale(1.2);} 100% {opacity:1; transform:scale(1);} }
+@keyframes floatUp { 0% { transform:translateY(0) scale(1); opacity:1;} 100% { transform:translateY(-110vh) scale(1.5); opacity:0;} }
 </style>
 </head>
-
 <body>
 
 <div class="card">
 
-  <!-- INTRO -->
   <div id="intro">
     <h1>This is for Daniya 💗</h1>
     <button id="startBtn">Tap here Daniya 💗</button>
-    <p id="musicPrompt" class="hidden">Tap here again to play music 🎵</p>
   </div>
 
-  <!-- CONTENT -->
   <div id="content" class="hidden">
 
     <div class="gallery">
@@ -141,267 +104,83 @@ button:active {
     </div>
 
     <button id="noteBtn">🎁 Surprise</button>
-
     <div id="loveNote" class="note hidden">
       Daniya, you are my everything! 💖💖💖
       <div class="forever-sign">Forever yours ❤️</div>
     </div>
 
+    <button id="musicBtn">🎵 Play/Pause Music</button>
     <button id="shareBtn">💌 Share this</button>
 
   </div>
-
 </div>
 
 <audio id="bg-music" src="song.mp3" loop></audio>
 
 <script>
 const photos = [
-  "photo1.jpg",
-  "photo2.jpg",
-  "photo3.jpg",
-  "photo4.jpg",
-  "photo5.jpg",
-  "photo6.jpg",
-  "photo7.jpg",
-  "photo8.jpg",
-  "photo9.jpg"
+  "photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg",
+  "photo5.jpg","photo6.jpg","photo7.jpg","photo8.jpg","photo9.jpg"
 ];
 let index = 0;
 
 // Preload images
-photos.forEach(src => {
-  const img = new Image();
-  img.src = src;
-});
+photos.forEach(src=>{ const img=new Image(); img.src=src; });
 
-function startSurprise() {
+// Elements
+const music = document.getElementById("bg-music");
+const slide = document.getElementById("slide");
+const loveNote = document.getElementById("loveNote");
+
+// Start button
+document.getElementById("startBtn").addEventListener("click", () => {
   document.getElementById("intro").style.display = "none";
   document.getElementById("content").classList.remove("hidden");
 
-  setInterval(changePhoto, 3000);
-  setInterval(createHeart, 500);
+  setInterval(changePhoto,3000);
+  setInterval(createHeart,500);
 
-  const music = document.getElementById("bg-music");
+  // Attempt to play music immediately
   music.volume = 0.5;
-  music.play().catch(err => {
-    const prompt = document.getElementById("musicPrompt");
-    prompt.classList.remove("hidden");
-    prompt.addEventListener("click", () => music.play());
-  });
-}
-
-function changePhoto() {
-  index = (index + 1) % photos.length;
-  document.getElementById("slide").src = photos[index];
-}
-
-function showNote() {
-  const note = document.getElementById("loveNote");
-  note.classList.remove("hidden");
-  note.style.animation = "fadeBounce 1s ease forwards";
-}
-
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = Math.random() > 0.5 ? "💗" : "💙";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 7000);
-}
-
-function shareLove() {
-  if (navigator.share) {
-    navigator.share({
-      title: "For Daniya 💗",
-      text: "I made something special for you 💗",
-      url: window.location.href
-    });
-  } else {
-    alert("Copy this link and share it 💗");
-  }
-}
-
-// Event listeners
-document.getElementById("startBtn").addEventListener("click", startSurprise);
-document.getElementById("noteBtn").addEventListener("click", showNote);
-document.getElementById("shareBtn").addEventListener("click", shareLove);
-</script>
-
-</body>
-</html>
-
-.note {
-  background: #fff0f5;
-  padding: 15px;
-  border-radius: 15px;
-  margin-top: 15px;
-  font-size: clamp(14px, 4vw, 16px);
-  color: #444;
-}
-
-.forever-sign {
-  margin-top: 15px;
-  font-weight: bold;
-  color: #ff69b4;
-  font-size: 17px;
-  opacity: 0;
-  animation: fadeIn 2s ease forwards;
-  animation-delay: 10s;
-}
-
-.heart {
-  position: fixed;
-  bottom: -20px;
-  font-size: 18px;
-  animation: floatUp 6s linear forwards;
-  pointer-events: none;
-  opacity: 0.8;
-  z-index: 1;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-110vh) scale(1.5);
-    opacity: 0;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<div class="card">
-
-  <!-- INTRO -->
-  <div id="intro">
-    <h1>This is for Daniya 💗</h1>
-    <button id="startBtn">Tap here Daniya 💗</button>
-  </div>
-
-  <!-- CONTENT -->
-  <div id="content" class="hidden">
-
-    <div class="gallery">
-      <img id="slide" src="photo1.jpg">
-    </div>
-
-    <button id="noteBtn">🎁 Surprise</button>
-
-    <div id="loveNote" class="note hidden">
-      <span id="typedText"></span>
-      <div class="forever-sign">Forever yours ❤️</div>
-    </div>
-
-    <button id="shareBtn">💌 Share this</button>
-
-  </div>
-
-</div>
-
-<audio id="bg-music" src="song.mp3" loop></audio>
-
-<script>
-const photos = [
-  "photo1.jpg",
-  "photo2.jpg",
-  "photo3.jpg",
-  "photo4.jpg",
-  "photo5.jpg",
-  "photo6.jpg",
-  "photo7.jpg",
-  "photo8.jpg",
-  "photo9.jpg"
-];
-let index = 0;
-
-// Preload images
-photos.forEach(src => {
-  const img = new Image();
-  img.src = src;
+  music.play().catch(()=>console.log("Autoplay blocked, use Play button"));
 });
 
-const loveMessage = "Daniya, I don’t even know where to start because words feel too small for what I feel for you. You came into my life quietly, but somehow you became the most important part of it. With you, even ordinary moments feel special, and even silence feels comfortable. You make me feel understood, valued, and loved in ways I never knew I needed. I love the way you are, your smile, your mood swings, your care, your imperfections, everything. You make me want to be better, not because you ask me to, but because loving you makes me want to grow. No matter what happens, I want you to know that my heart chooses you, again and again. I don’t just want moments with you, I want a lifetime. Through good days, bad days, distance, fights, laughter, and dreams, I want it all with you. You are not just someone I love, you are my home, my peace, my forever.";
-
-function startSurprise() {
-  // Hide intro and show content
-  document.getElementById("intro").style.display = "none";
-  document.getElementById("content").classList.remove("hidden");
-
-  // Start slideshow and hearts
-  setInterval(changePhoto, 3000);
-  setInterval(createHeart, 500);
-
-  // Play music
-  const music = document.getElementById("bg-music");
-  music.play().catch(err => console.log("Music autoplay blocked", err));
-}
-
+// Change photos
 function changePhoto() {
-  index = (index + 1) % photos.length;
-  document.getElementById("slide").src = photos[index];
+  index = (index+1)%photos.length;
+  slide.src = photos[index];
 }
 
-function showNote() {
-  const note = document.getElementById("loveNote");
-  const textEl = document.getElementById("typedText");
-  note.classList.toggle("hidden");
-  textEl.innerHTML = "";
-  typeText(loveMessage, textEl);
-}
+// Show love note
+document.getElementById("noteBtn").addEventListener("click", ()=>{
+  loveNote.classList.remove("hidden");
+  loveNote.style.animation = "fadeBounce 1s ease forwards";
+});
 
-function typeText(text, element) {
-  let i = 0;
-  const speed = 40;
-  function typing() {
-    if (i < text.length) {
-      element.innerHTML += text.charAt(i);
-      i++;
-      setTimeout(typing, speed);
-    }
-  }
-  typing();
-}
-
-function createHeart() {
+// Hearts
+function createHeart(){
   const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = Math.random() > 0.5 ? "💗" : "💙";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+  heart.className="heart";
+  heart.innerHTML=Math.random()>0.5?"💗":"💙";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.animationDuration=(4+Math.random()*3)+"s";
   document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 7000);
+  setTimeout(()=>heart.remove(),7000);
 }
 
-function shareLove() {
-  if (navigator.share) {
-    navigator.share({
-      title: "For Daniya 💗",
-      text: "I made something special for you 💗",
-      url: window.location.href
-    });
-  } else {
-    alert("Copy this link and share it 💗");
-  }
-}
+// Music button
+document.getElementById("musicBtn").addEventListener("click", ()=>{
+  if(music.paused) music.play();
+  else music.pause();
+});
 
-// Event listeners
-document.getElementById("startBtn").addEventListener("click", startSurprise);
-document.getElementById("noteBtn").addEventListener("click", showNote);
-document.getElementById("shareBtn").addEventListener("click", shareLove);
+// Share
+document.getElementById("shareBtn").addEventListener("click", ()=>{
+  if(navigator.share){
+    navigator.share({title:"For Daniya 💗", text:"I made something special for you 💗", url:window.location.href});
+  } else { alert("Copy this link and share it 💗"); }
+});
 </script>
 
 </body>
 </html>
-
