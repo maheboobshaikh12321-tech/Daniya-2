@@ -43,7 +43,6 @@ button {
 }
 
 button:active { transform: scale(0.97); }
-
 .hidden { display: none; }
 
 .gallery img {
@@ -57,10 +56,22 @@ button:active { transform: scale(0.97); }
   padding: 20px;
   border-radius: 15px;
   margin-top: 15px;
-  font-size: clamp(16px,4vw,18px);
+  font-size: clamp(16px, 4vw, 18px);
   font-weight: bold;
-  color: #ff1493;
-  animation: fadeBounce 1s ease forwards;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(270deg, #ff0000, #ff69b4, #ff1493, #8a2be2, #00f0ff, #00ff7f, #ffff00);
+  background-size: 1400% 1400%;
+  animation: rainbow 12s ease infinite;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.8s ease;
+}
+
+.note.show {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .forever-sign {
@@ -68,9 +79,6 @@ button:active { transform: scale(0.97); }
   font-weight: bold;
   color: #ff69b4;
   font-size: 17px;
-  opacity: 0;
-  animation: fadeIn 2s ease forwards;
-  animation-delay: 1s;
 }
 
 .heart {
@@ -81,106 +89,130 @@ button:active { transform: scale(0.97); }
   pointer-events: none;
   opacity: 0.8;
   z-index: 1;
+  transform-origin: center;
 }
 
-@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-@keyframes fadeBounce { 0% {opacity:0; transform:scale(0.5);} 50% {opacity:1; transform:scale(1.2);} 100% {opacity:1; transform:scale(1);} }
-@keyframes floatUp { 0% { transform:translateY(0) scale(1); opacity:1;} 100% { transform:translateY(-110vh) scale(1.5); opacity:0;} }
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity:1; }
+  50% { transform: translateY(-50vh) scale(1.2); }
+  100% { transform: translateY(-110vh) scale(1); opacity:0; }
+}
+
+@keyframes rainbow {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* Confetti pieces */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  top: -10px;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confettiFall 3s linear forwards;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg);}
+  100% { transform: translateY(100vh) rotate(720deg);}
+}
 </style>
 </head>
 <body>
 
 <div class="card">
-
   <div id="intro">
     <h1>This is for Daniya 💗</h1>
     <button id="startBtn">Tap here Daniya 💗</button>
   </div>
 
   <div id="content" class="hidden">
-
     <div class="gallery">
       <img id="slide" src="photo1.jpg">
     </div>
 
     <button id="noteBtn">🎁 Surprise</button>
-    <div id="loveNote" class="note hidden">
+    <div id="loveNote" class="note">
       Daniya, you are my everything! 💖💖💖
       <div class="forever-sign">Forever yours ❤️</div>
     </div>
 
     <button id="musicBtn">🎵 Play/Pause Music</button>
     <button id="shareBtn">💌 Share this</button>
-
   </div>
 </div>
 
 <audio id="bg-music" src="song.mp3" loop></audio>
 
 <script>
-const photos = [
-  "photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg",
-  "photo5.jpg","photo6.jpg","photo7.jpg","photo8.jpg","photo9.jpg"
-];
+// Images
+const photos = ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg","photo6.jpg","photo7.jpg","photo8.jpg","photo9.jpg"];
 let index = 0;
-
-// Preload images
-photos.forEach(src=>{ const img=new Image(); img.src=src; });
-
-// Elements
-const music = document.getElementById("bg-music");
 const slide = document.getElementById("slide");
-const loveNote = document.getElementById("loveNote");
-
-// Start button
-document.getElementById("startBtn").addEventListener("click", () => {
-  document.getElementById("intro").style.display = "none";
-  document.getElementById("content").classList.remove("hidden");
-
-  setInterval(changePhoto,3000);
-  setInterval(createHeart,500);
-
-  // Attempt to play music immediately
-  music.volume = 0.5;
-  music.play().catch(()=>console.log("Autoplay blocked, use Play button"));
-});
-
-// Change photos
-function changePhoto() {
-  index = (index+1)%photos.length;
-  slide.src = photos[index];
-}
-
-// Show love note
-document.getElementById("noteBtn").addEventListener("click", ()=>{
-  loveNote.classList.remove("hidden");
-  loveNote.style.animation = "fadeBounce 1s ease forwards";
-});
+photos.forEach(src=>{let img=new Image();img.src=src;});
 
 // Hearts
-function createHeart(){
+function createHeart() {
   const heart = document.createElement("div");
   heart.className="heart";
-  heart.innerHTML=Math.random()>0.5?"💗":"💙";
-  heart.style.left=Math.random()*100+"vw";
-  heart.style.animationDuration=(4+Math.random()*3)+"s";
+  heart.innerHTML = Math.random()>0.5?"💗":"💙";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.animationDuration = (4 + Math.random()*3)+"s";
   document.body.appendChild(heart);
   setTimeout(()=>heart.remove(),7000);
 }
 
+// Confetti
+function createConfetti(){
+  for(let i=0;i<50;i++){
+    const conf = document.createElement("div");
+    conf.className="confetti";
+    conf.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
+    conf.style.left = Math.random()*100 + "vw";
+    conf.style.animationDuration = (2 + Math.random()*2)+"s";
+    document.body.appendChild(conf);
+    setTimeout(()=>conf.remove(),3000);
+  }
+}
+
+// Start button
+const music = document.getElementById("bg-music");
+document.getElementById("startBtn").addEventListener("click",()=>{
+  document.getElementById("intro").style.display="none";
+  document.getElementById("content").classList.remove("hidden");
+
+  setInterval(()=>{ index=(index+1)%photos.length; slide.src=photos[index]; },3000);
+  setInterval(createHeart,500);
+
+  music.volume=0.5;
+  music.play().catch(()=>console.log("Autoplay blocked"));
+});
+
+// Show note with confetti
+const loveNote = document.getElementById("loveNote");
+document.getElementById("noteBtn").addEventListener("click",()=>{
+  loveNote.classList.add("show");
+  createConfetti();
+});
+
 // Music button
-document.getElementById("musicBtn").addEventListener("click", ()=>{
-  if(music.paused) music.play();
-  else music.pause();
+document.getElementById("musicBtn").addEventListener("click",()=>{
+  if(music.paused) music.play(); else music.pause();
 });
 
 // Share
-document.getElementById("shareBtn").addEventListener("click", ()=>{
+document.getElementById("shareBtn").addEventListener("click",()=>{
   if(navigator.share){
-    navigator.share({title:"For Daniya 💗", text:"I made something special for you 💗", url:window.location.href});
-  } else { alert("Copy this link and share it 💗"); }
+    navigator.share({title:"For Daniya 💗",text:"I made something special for you 💗",url:window.location.href});
+  }else{
+    alert("Copy this link and share it 💗");
+  }
 });
 </script>
-
 </body>
 </html>
