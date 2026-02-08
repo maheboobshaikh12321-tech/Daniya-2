@@ -19,7 +19,7 @@ body {
 .card {
   background: white;
   width: 90%;
-  max-width: 420px;
+  max-width: 450px;
   padding: 30px;
   border-radius: 22px;
   text-align: center;
@@ -34,7 +34,7 @@ body {
 h1 { color: #ff69b4; margin:0; }
 
 button {
-  padding: 18px 32px;
+  padding: 15px 28px;
   font-size: 18px;
   border-radius: 30px;
   border: none;
@@ -46,6 +46,7 @@ button {
 }
 
 button:active { transform: scale(0.97); }
+
 .hidden { display: none; }
 
 .gallery img {
@@ -63,14 +64,12 @@ button:active { transform: scale(0.97); }
   padding: 20px;
   border-radius: 15px;
   margin-top: 15px;
-  font-size: clamp(16px, 4vw, 18px);
+  font-size: 16px;
   font-weight: bold;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  background-image: linear-gradient(270deg, #ff0000, #ff69b4, #ff1493, #8a2be2, #00f0ff, #00ff7f, #ffff00);
-  background-size: 1400% 1400%;
-  animation: rainbow 12s ease infinite;
+  color: #ff1493;
+  text-align: left;
+  max-height: 300px;
+  overflow-y: auto;
   opacity: 0;
   transform: scale(0.5);
   transition: all 0.8s ease;
@@ -86,6 +85,7 @@ button:active { transform: scale(0.97); }
   font-weight: bold;
   color: #ff69b4;
   font-size: 17px;
+  text-align: center;
 }
 
 .heart {
@@ -116,12 +116,6 @@ button:active { transform: scale(0.97); }
   100% { transform: translateY(-110vh) scale(1); opacity:0; }
 }
 
-@keyframes rainbow {
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
-
 @keyframes confettiFall {
   0% { transform: translateY(0) rotate(0deg);}
   100% { transform: translateY(100vh) rotate(720deg);}
@@ -145,26 +139,32 @@ button:active { transform: scale(0.97); }
 
     <button id="noteBtn">🎁 Surprise</button>
     <div id="loveNote" class="note">
-      Daniya, you are my everything! 💖💖💖
+      Daniya, I don’t even know where to start because words feel too small for what I feel for you. 
+      You came into my life quietly, but somehow you became the most important part of it. 
+      With you, even ordinary moments feel special, and even silence feels comfortable. 
+      You make me feel understood, valued, and loved in ways I never knew I needed. 
+      I love the way you are, your smile, your mood swings, your care, your imperfections, everything. 
+      You make me want to be better, not because you ask me to, but because loving you makes me want to grow. 
+      No matter what happens, I want you to know that my heart chooses you, again and again. 
+      I don’t just want moments with you, I want a lifetime. 
+      Through good days, bad days, distance, fights, laughter, and dreams, I want it all with you. 
+      You are not just someone I love, you are my home, my peace, my forever.
       <div class="forever-sign">Forever yours ❤️</div>
     </div>
 
     <button id="musicBtn">🎵 Play/Pause Music</button>
     <button id="shareBtn">💌 Share this</button>
-
   </div>
 </div>
 
 <audio id="bg-music" src="song.mp3" loop></audio>
 
 <script>
-// Images
 const photos = ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg","photo6.jpg","photo7.jpg","photo8.jpg","photo9.jpg"];
 let index = 0;
 const slide = document.getElementById("slide");
-photos.forEach(src=>{let img=new Image(); img.src=src;});
+photos.forEach(src=>{ let img = new Image(); img.src = src; });
 
-// Hearts
 function createHeart() {
   const heart = document.createElement("div");
   heart.className="heart";
@@ -175,7 +175,6 @@ function createHeart() {
   setTimeout(()=>heart.remove(),7000);
 }
 
-// Confetti
 function createConfetti(){
   for(let i=0;i<50;i++){
     const conf = document.createElement("div");
@@ -188,7 +187,6 @@ function createConfetti(){
   }
 }
 
-// Start button
 const music = document.getElementById("bg-music");
 document.getElementById("startBtn").addEventListener("click",()=>{
   document.getElementById("intro").style.display="none";
@@ -198,22 +196,19 @@ document.getElementById("startBtn").addEventListener("click",()=>{
   setInterval(createHeart,500);
 
   music.volume=0.5;
-  music.play().catch(()=>console.log("Autoplay blocked"));
+  music.play().catch(()=>console.log("Autoplay blocked, use Play button"));
 });
 
-// Show note with confetti
 const loveNote = document.getElementById("loveNote");
 document.getElementById("noteBtn").addEventListener("click",()=>{
   loveNote.classList.add("show");
   createConfetti();
 });
 
-// Music button
 document.getElementById("musicBtn").addEventListener("click",()=>{
   if(music.paused) music.play(); else music.pause();
 });
 
-// Share button
 document.getElementById("shareBtn").addEventListener("click",()=>{
   if(navigator.share){
     navigator.share({title:"For Daniya 💗",text:"I made something special for you 💗",url:window.location.href});
