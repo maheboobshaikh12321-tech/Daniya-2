@@ -1,228 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>For Daniya 💗</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #ffb6c1, #add8e6);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-x: hidden;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Be My Valentine?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #ffe4e1;
+            font-family: 'Nunito', sans-serif;
+            overflow: hidden; 
+            touch-action: manipulation;
+        }
 
-.card {
-  background: white;
-  width: 90%;
-  max-width: 450px;
-  padding: 30px;
-  border-radius: 22px;
-  text-align: center;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+        .container {
+            text-align: center;
+            width: 100%;
+            z-index: 10; /* Keeps content above falling hearts */
+        }
 
-h1 { color: #ff69b4; margin: 0; }
+        .gif-container img {
+            max-width: 200px;
+            width: 80%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
 
-button {
-  padding: 15px 28px;
-  font-size: 18px;
-  border-radius: 30px;
-  border: none;
-  background: linear-gradient(135deg, #ff69b4, #87cefa);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 18px;
-}
+        h1 {
+            color: #d32f2f;
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
 
-button:active { transform: scale(0.97); }
-.hidden { display: none; }
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
 
-.gallery img {
-  width: 100%;
-  max-width: 100%;
-  border-radius: 16px;
-  margin-top: 15px;
-  display: block;
-}
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
 
-.note {
-  background: #fff0f5;
-  padding: 20px;
-  border-radius: 15px;
-  margin-top: 15px;
-  font-size: 16px;
-  color: #ff1493;
-  text-align: left;
-  max-height: 300px;
-  overflow-y: auto;
-  opacity: 0;
-  transform: scale(0.5);
-  transition: all 0.8s ease;
-}
+        #yesBtn { background-color: #4caf50; color: white; }
+        #noBtn { background-color: #f44336; color: white; }
 
-.note.show {
-  opacity: 1;
-  transform: scale(1);
-}
+        /* Falling Hearts Animation */
+        .heart {
+            position: absolute;
+            top: -20px;
+            color: #ff4d6d;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
 
-.forever-sign {
-  margin-top: 15px;
-  font-weight: bold;
-  color: #ff69b4;
-  font-size: 17px;
-  text-align: center;
-}
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
 
-.heart {
-  position: fixed;
-  bottom: -20px;
-  font-size: 18px;
-  animation: floatUp 6s linear forwards;
-  pointer-events: none;
-  opacity: 0.8;
-  z-index: 1;
-}
-
-.confetti {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  top: -10px;
-  opacity: 0.8;
-  pointer-events: none;
-  z-index: 9999;
-  animation: confettiFall 3s linear forwards;
-}
-
-@keyframes floatUp {
-  0% { transform: translateY(0) scale(1); opacity:1; }
-  50% { transform: translateY(-50vh) scale(1.2); }
-  100% { transform: translateY(-110vh) scale(1); opacity:0; }
-}
-
-@keyframes confettiFall {
-  0% { transform: translateY(0) rotate(0deg);}
-  100% { transform: translateY(100vh) rotate(720deg);}
-}
-</style>
+        .hidden { display: none; }
+    </style>
 </head>
 <body>
 
-<div class="card">
+    <audio id="valentineMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
-  <!-- INTRO -->
-  <div id="intro">
-    <h1>This is for Daniya 💗</h1>
-    <button id="startBtn">Tap here Daniya 💗</button>
-  </div>
-
-  <!-- CONTENT -->
-  <div id="content" class="hidden">
-
-    <div class="gallery">
-      <img id="slide" src="photo1.jpg">
+    <div class="container">
+        <div class="gif-container">
+            <img id="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIybHllNnJycXN4bHlhZTF6Zzh6eHh6eHh6eHh6eHh6eHh6eHh6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpNUMo/giphy.gif" alt="Bears">
+        </div>
+        <h1 id="question">Hanshika, will you be my Valentine?</h1>
+        
+        <div class="buttons" id="button-group">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
     </div>
 
-    <button id="noteBtn">🎁 Show Love Note</button>
-    <div id="loveNote" class="note">
-      Daniya, I don’t even know where to start because words feel too small for what I feel for you. 
-      You came into my life quietly, but somehow you became the most important part of it. 
-      With you, even ordinary moments feel special, and even silence feels comfortable. 
-      You make me feel understood, valued, and loved in ways I never knew I needed. 
-      I love the way you are, your smile, your mood swings, your care, your imperfections, everything. 
-      You make me want to be better, not because you ask me to, but because loving you makes me want to grow. 
-      No matter what happens, I want you to know that my heart chooses you, again and again. 
-      I don’t just want moments with you, I want a lifetime. 
-      Through good days, bad days, distance, fights, laughter, and dreams, I want it all with you. 
-      You are not just someone I love, you are my home, my peace, my forever.
-      <div class="forever-sign">Forever yours ❤️</div>
-    </div>
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const question = document.getElementById('question');
+        const mainGif = document.getElementById('main-gif');
+        const music = document.getElementById('valentineMusic');
 
-    <button id="musicBtn">🎵 Play Music</button>
-    <button id="shareBtn">💌 Share this</button>
+        const noTexts = [
+            "No", "Are you sure?", "Really?", "Pookie please", 
+            "I'll buy you ramen", "Pretty please?", "Don't do this...", 
+            "I'm gonna cry", "You're breaking my heart", "Please babe",
+            "OK NO BUTTON IS GONE"
+        ];
 
-  </div>
-</div>
+        let noCount = 0;
 
-<audio id="bg-music" src="song.mp3" loop></audio>
+        // Logic for the No button
+        noBtn.addEventListener('click', () => {
+            noCount++;
+            if (noCount < noTexts.length) {
+                noBtn.innerText = noTexts[noCount];
+            }
+            
+            // Make Yes button grow
+            const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = (currentSize * 1.3) + 'px';
+            yesBtn.style.padding = (parseFloat(window.getComputedStyle(yesBtn).padding) * 1.1) + 'px';
 
-<script>
-// Images
-const photos = ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg","photo6.jpg","photo7.jpg","photo8.jpg","photo9.jpg"];
-let index = 0;
-const slide = document.getElementById("slide");
-photos.forEach(src=>{ let img = new Image(); img.src=src; });
+            if (noCount >= 10) {
+                noBtn.style.display = 'none';
+            }
+        });
 
-// Hearts
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.className="heart";
-  heart.innerHTML = Math.random()>0.5?"💗":"💙";
-  heart.style.left = Math.random()*100 + "vw";
-  heart.style.animationDuration = (4 + Math.random()*3)+"s";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),7000);
-}
+        // Logic for the Yes button
+        yesBtn.addEventListener('click', () => {
+            document.getElementById('button-group').classList.add('hidden');
+            question.innerText = "WOOOOOOO!!! I love you my penguin!! ❤️❤️";
+            mainGif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIybHllNnJycXN4bHlhZTF6Zzh6eHh6eHh6eHh6eHh6eHh6eHh6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lTfuxV5R1yB6eA/giphy.gif";
+            
+            // Play Music
+            music.play();
 
-// Confetti
-function createConfetti(){
-  for(let i=0;i<50;i++){
-    const conf = document.createElement("div");
-    conf.className="confetti";
-    conf.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
-    conf.style.left = Math.random()*100 + "vw";
-    conf.style.animationDuration = (2 + Math.random()*2)+"s";
-    document.body.appendChild(conf);
-    setTimeout(()=>conf.remove(),3000);
-  }
-}
+            // Start falling hearts
+            setInterval(createHeart, 300);
+        });
 
-// Start button
-const music = document.getElementById("bg-music");
-document.getElementById("startBtn").addEventListener("click",()=>{
-  document.getElementById("intro").style.display="none";
-  document.getElementById("content").classList.remove("hidden");
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerText = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
 
-  setInterval(()=>{ index=(index+1)%photos.length; slide.src=photos[index]; },3000);
-  setInterval(createHeart,500);
-});
-
-// Show Love Note
-const loveNote = document.getElementById("loveNote");
-document.getElementById("noteBtn").addEventListener("click",()=>{
-  loveNote.classList.add("show");
-  createConfetti();
-});
-
-// Music Play/Pause button (works on mobile)
-const musicBtn = document.getElementById("musicBtn");
-musicBtn.addEventListener("click", ()=>{
-  if(music.paused) {
-    music.play().then(()=>musicBtn.textContent="⏸ Pause Music").catch(()=>alert("Tap button to play music"));
-  } else {
-    music.pause();
-    musicBtn.textContent="▶ Play Music";
-  }
-});
-
-// Share
-document.getElementById("shareBtn").addEventListener("click",()=>{
-  if(navigator.share){
-    navigator.share({title:"For Daniya 💗",text:"I made something special for you 💗",url:window.location.href});
-  }else{
-    alert("Copy this link and share it 💗");
-  }
-});
-</script>
-
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+    </script>
 </body>
 </html>
