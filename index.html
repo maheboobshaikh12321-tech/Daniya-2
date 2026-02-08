@@ -26,9 +26,12 @@ body {
   box-shadow: 0 15px 35px rgba(0,0,0,0.25);
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-h1 { color: #ff69b4; }
+h1 { color: #ff69b4; margin:0; }
 
 button {
   padding: 18px 32px;
@@ -47,8 +50,12 @@ button:active { transform: scale(0.97); }
 
 .gallery img {
   width: 100%;
+  max-width: 100%;
   border-radius: 16px;
   margin-top: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .note {
@@ -92,6 +99,17 @@ button:active { transform: scale(0.97); }
   transform-origin: center;
 }
 
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  top: -10px;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confettiFall 3s linear forwards;
+}
+
 @keyframes floatUp {
   0% { transform: translateY(0) scale(1); opacity:1; }
   50% { transform: translateY(-50vh) scale(1.2); }
@@ -104,19 +122,6 @@ button:active { transform: scale(0.97); }
   100%{background-position:0% 50%;}
 }
 
-/* Confetti pieces */
-.confetti {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  background-color: red;
-  top: -10px;
-  opacity: 0.8;
-  pointer-events: none;
-  z-index: 9999;
-  animation: confettiFall 3s linear forwards;
-}
-
 @keyframes confettiFall {
   0% { transform: translateY(0) rotate(0deg);}
   100% { transform: translateY(100vh) rotate(720deg);}
@@ -126,12 +131,14 @@ button:active { transform: scale(0.97); }
 <body>
 
 <div class="card">
+
   <div id="intro">
     <h1>This is for Daniya 💗</h1>
     <button id="startBtn">Tap here Daniya 💗</button>
   </div>
 
   <div id="content" class="hidden">
+
     <div class="gallery">
       <img id="slide" src="photo1.jpg">
     </div>
@@ -144,6 +151,7 @@ button:active { transform: scale(0.97); }
 
     <button id="musicBtn">🎵 Play/Pause Music</button>
     <button id="shareBtn">💌 Share this</button>
+
   </div>
 </div>
 
@@ -154,7 +162,7 @@ button:active { transform: scale(0.97); }
 const photos = ["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg","photo6.jpg","photo7.jpg","photo8.jpg","photo9.jpg"];
 let index = 0;
 const slide = document.getElementById("slide");
-photos.forEach(src=>{let img=new Image();img.src=src;});
+photos.forEach(src=>{let img=new Image(); img.src=src;});
 
 // Hearts
 function createHeart() {
@@ -205,7 +213,7 @@ document.getElementById("musicBtn").addEventListener("click",()=>{
   if(music.paused) music.play(); else music.pause();
 });
 
-// Share
+// Share button
 document.getElementById("shareBtn").addEventListener("click",()=>{
   if(navigator.share){
     navigator.share({title:"For Daniya 💗",text:"I made something special for you 💗",url:window.location.href});
@@ -214,5 +222,6 @@ document.getElementById("shareBtn").addEventListener("click",()=>{
   }
 });
 </script>
+
 </body>
 </html>
