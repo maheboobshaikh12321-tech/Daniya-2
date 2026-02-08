@@ -60,12 +60,178 @@ button:active {
   margin-top: 15px;
 }
 
-.message {
-  margin-top: 18px;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #444;
+.note {
+  background: #fff0f5;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 15px;
+  font-size: clamp(16px, 4vw, 18px);
+  font-weight: bold;
+  color: #ff1493;
+  animation: fadeBounce 1s ease forwards;
 }
+
+.forever-sign {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #ff69b4;
+  font-size: 17px;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+  animation-delay: 1s;
+}
+
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 18px;
+  animation: floatUp 6s linear forwards;
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+#musicPrompt {
+  color: #ff69b4;
+  margin-top: 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeBounce {
+  0% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-110vh) scale(1.5);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <!-- INTRO -->
+  <div id="intro">
+    <h1>This is for Daniya 💗</h1>
+    <button id="startBtn">Tap here Daniya 💗</button>
+    <p id="musicPrompt" class="hidden">Tap here again to play music 🎵</p>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="content" class="hidden">
+
+    <div class="gallery">
+      <img id="slide" src="photo1.jpg">
+    </div>
+
+    <button id="noteBtn">🎁 Surprise</button>
+
+    <div id="loveNote" class="note hidden">
+      Daniya, you are my everything! 💖💖💖
+      <div class="forever-sign">Forever yours ❤️</div>
+    </div>
+
+    <button id="shareBtn">💌 Share this</button>
+
+  </div>
+
+</div>
+
+<audio id="bg-music" src="song.mp3" loop></audio>
+
+<script>
+const photos = [
+  "photo1.jpg",
+  "photo2.jpg",
+  "photo3.jpg",
+  "photo4.jpg",
+  "photo5.jpg",
+  "photo6.jpg",
+  "photo7.jpg",
+  "photo8.jpg",
+  "photo9.jpg"
+];
+let index = 0;
+
+// Preload images
+photos.forEach(src => {
+  const img = new Image();
+  img.src = src;
+});
+
+function startSurprise() {
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("content").classList.remove("hidden");
+
+  setInterval(changePhoto, 3000);
+  setInterval(createHeart, 500);
+
+  const music = document.getElementById("bg-music");
+  music.volume = 0.5;
+  music.play().catch(err => {
+    const prompt = document.getElementById("musicPrompt");
+    prompt.classList.remove("hidden");
+    prompt.addEventListener("click", () => music.play());
+  });
+}
+
+function changePhoto() {
+  index = (index + 1) % photos.length;
+  document.getElementById("slide").src = photos[index];
+}
+
+function showNote() {
+  const note = document.getElementById("loveNote");
+  note.classList.remove("hidden");
+  note.style.animation = "fadeBounce 1s ease forwards";
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = Math.random() > 0.5 ? "💗" : "💙";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 7000);
+}
+
+function shareLove() {
+  if (navigator.share) {
+    navigator.share({
+      title: "For Daniya 💗",
+      text: "I made something special for you 💗",
+      url: window.location.href
+    });
+  } else {
+    alert("Copy this link and share it 💗");
+  }
+}
+
+// Event listeners
+document.getElementById("startBtn").addEventListener("click", startSurprise);
+document.getElementById("noteBtn").addEventListener("click", showNote);
+document.getElementById("shareBtn").addEventListener("click", shareLove);
+</script>
+
+</body>
+</html>
 
 .note {
   background: #fff0f5;
@@ -238,3 +404,4 @@ document.getElementById("shareBtn").addEventListener("click", shareLove);
 
 </body>
 </html>
+
