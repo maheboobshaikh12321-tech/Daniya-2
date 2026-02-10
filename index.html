@@ -1,108 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>For Daniya 💗</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #ffb6c1, #add8e6);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-x: hidden;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Daniya 💗</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #ffeef2;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
 
-.card {
-  background: white;
-  width: 90%;
-  max-width: 450px;
-  padding: 30px;
-  border-radius: 22px;
-  text-align: center;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            z-index: 10;
+        }
 
-h1 { color: #ff69b4; margin: 0; }
+        h1 { color: #ff4d6d; font-size: 28px; }
+        p { color: #555; line-height: 1.5; }
 
-button {
-  padding: 15px 28px;
-  font-size: 18px;
-  border-radius: 30px;
-  border: none;
-  background: linear-gradient(135deg, #ff69b4, #87cefa);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 18px;
-}
+        .gif-box img {
+            width: 150px;
+            margin: 15px 0;
+            border-radius: 15px;
+        }
 
-button:active { transform: scale(0.97); }
-.hidden { display: none; }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
 
-.gallery img {
-  width: 100%;
-  max-width: 100%;
-  border-radius: 16px;
-  margin-top: 15px;
-}
+        button {
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
 
-.note {
-  background: #fff0f5;
-  padding: 20px;
-  border-radius: 15px;
-  margin-top: 15px;
-  font-size: 16px;
-  color: #ff1493;
-  text-align: left;
-  max-height: 300px;
-  overflow-y: auto;
-  opacity: 0;
-  transform: scale(0.5);
-  transition: all 0.8s ease;
-}
+        #yesBtn { background-color: #ff4d6d; color: white; font-size: 18px; }
+        #noBtn { background-color: #bdc3c7; color: white; font-size: 18px; position: relative; }
 
-.note.show {
-  opacity: 1;
-  transform: scale(1);
-}
+        /* Floating Hearts Animation */
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 20px;
+            pointer-events: none;
+            animation: float 3s linear forwards;
+        }
 
-.forever-sign {
-  margin-top: 15px;
-  font-weight: bold;
-  color: #ff69b4;
-  font-size: 17px;
-  text-align: center;
-}
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
 
-.heart {
-  position: fixed;
-  bottom: -20px;
-  font-size: 18px;
-  animation: floatUp 6s linear forwards;
-  pointer-events: none;
-  opacity: 0.8;
-  z-index: 1;
-}
+    <div class="card">
+        <h1 id="title">For Daniya 💗</h1>
+        <div class="gif-box">
+            <img id="mainGif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG56ZzR6bmZ6ZzR6bmZ6ZzR6bmZ6ZzR6bmZ6ZzR6bmZ6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/L95W4wv8nnb9K/giphy.gif" alt="sorry">
+        </div>
+        <p id="para">I’m really sorry for everything. I hate it when we're not okay. Can you find it in your heart to forgive me? 🥺</p>
+        
+        <div class="btn-container" id="btns">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+        <p id="hugCount" style="margin-top:15px; font-size:12px; color:#ff8fa3;"></p>
+    </div>
 
-.confetti {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  top: -10px;
-  opacity: 0.8;
-  pointer-events: none;
-  z-index: 9999;
-  animation: confettiFall 3s linear forwards;
-}
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const title = document.getElementById('title');
+        const para = document.getElementById('para');
+        const mainGif = document.getElementById('mainGif');
+        const hugCount = document.getElementById('hugCount');
 
-@keyframes floatUp {
-  0% { transform: translateY(0) scale(1); opacity:1; }
-  50% { transform: translateY(-50vh) scale(1.2); }
-  
+        let yesSize = 18;
+        let hugs = 0;
+
+        noBtn.addEventListener('click', () => {
+            // Make Yes button bigger
+            yesSize += 30;
+            yesBtn.style.fontSize = yesSize + 'px';
+            yesBtn.style.padding = (yesSize/2) + 'px ' + (yesSize) + 'px';
+
+            // Add virtual hugs
+            hugs += 5;
+            hugCount.innerText = "Hugs earned: " + hugs;
+
+            // Change No button text
+            const textOptions = ["Are you sure?", "Pwease?", "Really Daniya?", "Look how big 'Yes' is!", "Don't do this!"];
+            noBtn.innerText = textOptions[Math.floor(Math.random() * textOptions.length)];
+
+            // Create hearts
+            createHeart();
+        });
+
+        yesBtn.addEventListener('click', () => {
+            title.innerText = "Yay! ❤️";
+            para.innerText = "I love you so much, Daniya! I promise to make you the happiest. You just earned " + (hugs + 1) + " real hugs! 🥰";
+            mainGif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueG56ZzR6bmZ6ZzR6bmZ6ZzR6bmZ6ZzR6bmZ6ZzR6bmZ6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/MDJ9IbxxvDUQM/giphy.gif";
+            document.getElementById('btns').style.display = 'none';
+            
+            setInterval(createHeart, 300);
+        });
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
